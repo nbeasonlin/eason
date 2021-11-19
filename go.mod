@@ -1,4 +1,4 @@
-module github.com/tansoz/imchat
+module github.com/tansoz/chat
 
 go 1.13
 
