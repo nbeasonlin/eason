@@ -6,11 +6,11 @@ import (
 )
 
 type Message interface {
-	From() int      // 发送方:用户ID
-	To() int        // 接收方:用户ID
-	Timestamp() int // 发送时间戳
-	Data() []byte   // 内容数据
-	Bytes() []byte  // 序列化
+	From() int            // 发送方:用户ID
+	To() int              // 接收方:用户ID
+	Timestamp() time.Time // 发送时间戳
+	Data() []byte         // 内容数据
+	Bytes() []byte        // 序列化
 }
 
 type messageImpl struct {
@@ -38,8 +38,8 @@ func (m *messageImpl) From() int {
 func (m *messageImpl) To() int {
 	return m.To_
 }
-func (m *messageImpl) Timestamp() int {
-	return m.Timestamp_
+func (m *messageImpl) Timestamp() time.Time {
+	return time.Unix(int64(m.Timestamp_), 0)
 }
 func (m *messageImpl) Data() []byte {
 	return m.Data_
