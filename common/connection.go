@@ -116,6 +116,9 @@ func NewWebSocketConnection(ws *websocket.Conn) Connection {
 }
 func (w *webSocketConnectionImpl) Read() ([]byte, error) {
 	_, data, err := w.ws.ReadMessage()
+	if err == websocket.ErrCloseSent {
+		err = io.EOF
+	}
 	return data, err
 }
 func (w *webSocketConnectionImpl) Write(p []byte) error {

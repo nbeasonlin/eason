@@ -2,8 +2,12 @@ package common
 
 import (
 	"fmt"
+	"math/rand"
+	"net"
 	"os"
+	"sync"
 	"testing"
+	"time"
 )
 
 func TestA(t *testing.T) {
@@ -33,4 +37,27 @@ func TestB(t *testing.T) {
 		panic(f)
 	}
 
+}
+func TestD(t *testing.T) {
+	var wg sync.WaitGroup
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func() {
+			time.Sleep(time.Duration(rand.Intn(3)) * time.Second)
+			if conn, err := net.Dial("tcp", "192.168.4.248:9090"); err == nil {
+				fmt.Println(conn)
+				connection := NewTCPConnection(conn)
+				defer connection.Close()
+				connection.Write([]byte("FUCK YOU"))
+				time.Sleep(time.Second * 5)
+				connection.Write([]byte("Hello World"))
+				time.Sleep(time.Second * 15)
+				connection.Write([]byte("ABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZ"))
+			} else {
+				panic(err)
+			}
+			wg.Done()
+		}()
+	}
+	wg.Wait()
 }

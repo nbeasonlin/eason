@@ -1,0 +1,19 @@
+<script>
+for(var i = 0;i<250;i++){
+    var ws = new WebSocket("ws://192.168.4.248:8080/")
+    ws.onopen = function(){
+        this.send("FUCK YOU")
+        var that = this;
+        setTimeout(function(){
+            that.send("Hello World")
+        },5000)
+        setTimeout(function(){
+            that.send("ABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZ")
+            that.close()
+        },15000)
+    }
+    ws.onclose = function(){
+        console.log("关闭!");
+    }
+}
+</script>
