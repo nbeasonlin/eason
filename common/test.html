@@ -1,19 +1,32 @@
 <script>
-for(var i = 0;i<250;i++){
-    var ws = new WebSocket("ws://192.168.4.248:8080/")
-    ws.onopen = function(){
-        this.send("FUCK YOU")
-        var that = this;
-        setTimeout(function(){
-            that.send("Hello World")
-        },5000)
-        setTimeout(function(){
-            that.send("ABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZ")
-            that.close()
-        },15000)
-    }
-    ws.onclose = function(){
-        console.log("关闭!");
-    }
+// for(var i = 0;i<250;i++){
+//     var ws = new WebSocket("ws://192.168.4.248:8080/")
+//     ws.onopen = function(){
+//         this.send("FUCK YOU")
+//         var that = this;
+//         setTimeout(function(){
+//             that.send("Hello World")
+//         },5000)
+//         setTimeout(function(){
+//             that.send("ABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZABCDEFGHIJKLNMOPQRSTUVWXYZ")
+//             that.close()
+//         },15000)
+//     }
+//     ws.onclose = function(){
+//         console.log("关闭!");
+//     }
+// }
+var ws = new WebSocket("ws://192.168.4.248:8080/")
+ws.onopen = function(){
+    ws.send(JSON.stringify({
+        from:1,
+        to:2,
+        timestamp:parseInt((new Date().getTime())/1000),
+        data:btoa("CNMP")
+    }));
+}
+ws.onmessage = function(e){
+    console.log(e);
+    this.close();
 }
 </script>
